@@ -69,7 +69,7 @@ export default class PatientRepository {
         })
         .sort({ date: 1 });
 
-      const reportsWithDoctorName = await Promise.all(
+      const Report = await Promise.all(
         patientReport.map(async (report) => {
           const doctor = await doctorModel.findById(report.createdByDoctor);
           const formattedDate = new Date(report.date).toLocaleString("en-IN", {
@@ -78,7 +78,7 @@ export default class PatientRepository {
             year: "numeric",
             hour: "2-digit",
             minute: "2-digit",
-            second: "2-digit",
+            hour12: false,
           });
           return {
             createdByDoctor: doctor.name,
@@ -88,7 +88,7 @@ export default class PatientRepository {
         })
       );
 
-      return reportsWithDoctorName;
+      return Report;
     } catch (err) {
       console.log(err);
       throw new Error("Something went wrong with the database", 500);

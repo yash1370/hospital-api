@@ -58,12 +58,8 @@ export default class PatientController {
   }
 
   async getReportById(req, res) {
-    const createdByDoctor = req.doctorId;
     const patientId = req.body.patientId;
-    const result = await this.patientRepository.getReportById(
-      patientId,
-      createdByDoctor
-    );
+    const result = await this.patientRepository.getReportById(patientId);
     if (!result) {
       res.status(404).json({
         message: `No Reports with status ${patientId}`,
